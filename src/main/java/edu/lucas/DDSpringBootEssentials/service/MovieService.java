@@ -1,6 +1,7 @@
 package edu.lucas.DDSpringBootEssentials.service;
 
 import edu.lucas.DDSpringBootEssentials.domain.Movie;
+import edu.lucas.DDSpringBootEssentials.mapper.MovieMapper;
 import edu.lucas.DDSpringBootEssentials.repository.MovieRepository;
 import edu.lucas.DDSpringBootEssentials.requests.MoviePostRequest;
 import edu.lucas.DDSpringBootEssentials.requests.MoviePutRequest;
@@ -27,8 +28,8 @@ public class MovieService {
     }
 
     public Movie save(MoviePostRequest moviePostRequest) {
-        Movie movie = Movie.builder().name(moviePostRequest.getName()).build();
-        return movieRepository.save(movie);
+        // Movie movie = Movie.builder().name(moviePostRequest.getName()).build();
+        return movieRepository.save(MovieMapper.INSTANCE.toMovie(moviePostRequest));
     }
 
     public void delete(long id) {
@@ -37,11 +38,14 @@ public class MovieService {
 
     public void replace(MoviePutRequest moviePutRequest) {
         Movie savedMovie = findByIdOrThrowBadRequestException(moviePutRequest.getId());
+        Movie movie = movieRepository.save(MovieMapper.INSTANCE.toMovie(moviePutRequest));
+        movie.setId(savedMovie.getId());
+
+        /*
         Movie movie = Movie.builder()
                 .id(savedMovie.getId())
                 .name(moviePutRequest.getName())
                 .build();
-
-        movieRepository.save(movie);
+        */
     }
 }

@@ -33,7 +33,7 @@ public class MovieController {
      * <b>@Autowired</b>: injeção de dependência
      */
     // @Autowired
-    private final DateUtil dateUtil;
+    // private final DateUtil dateUtil;
     private final MovieService movieService;
 
     /**
@@ -43,7 +43,7 @@ public class MovieController {
      */
     @GetMapping
     public ResponseEntity<List<Movie>> listAll() { // ResponseEntity => Entidade de Resposta -> Uma List de Movie
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now())); // Log no terminal a hora que executa o projeto
+        // log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now())); // Log no terminal a hora que executa o projeto
 
         return ResponseEntity.ok(movieService.listAll());
         // return new ResponseEntity<>(movieService.listAll(), HttpStatus.OK);
