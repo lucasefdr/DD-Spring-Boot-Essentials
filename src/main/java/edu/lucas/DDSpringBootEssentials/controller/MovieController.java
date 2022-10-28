@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
@@ -59,5 +56,18 @@ public class MovieController {
     @GetMapping(path = "/{id}")
     public ResponseEntity<Movie> findById(@PathVariable long id) {
         return ResponseEntity.ok(movieService.findById(id));
+    }
+
+    /**
+     * Endpoint: <b>localhost:8080/movies/{id}</b> <br>
+     * Método: <b>POST</b> <br>
+     * <b>@RequestBody</b>: requisita de um body para tratar com o jackson. <br>
+     * <b>@ResponseStatus</b>: padrão de resposta do endpoint. <br>
+     * <b>jackson</b>: faz o mapeamento do JSON se o mesmo conter as propriedades idênticas a classe
+     */
+    @PostMapping
+    // @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Movie> save(@RequestBody Movie movie) {
+        return new ResponseEntity<>(movieService.save(movie), HttpStatus.CREATED);
     }
 }

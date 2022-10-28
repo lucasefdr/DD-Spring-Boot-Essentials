@@ -1,5 +1,6 @@
 package edu.lucas.DDSpringBootEssentials.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -7,6 +8,8 @@ import lombok.Data;
 @AllArgsConstructor // Gera constructor com todos os valores
 public class Movie {
     private Long id;
+
+    @JsonProperty("name")
     private String name;
 
     /*public Movie(String name) {
