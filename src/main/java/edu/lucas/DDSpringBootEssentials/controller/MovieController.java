@@ -8,7 +8,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -41,7 +40,7 @@ public class MovieController {
      * <b>@ResponseEntity</b>: entidade de resposta
      */
     @GetMapping
-    public ResponseEntity<List<Movie>> list() { // ResponseEntity => Entidade de Resposta -> Uma List de Movie
+    public ResponseEntity<List<Movie>> listAll() { // ResponseEntity => Entidade de Resposta -> Uma List de Movie
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now())); // Log no terminal a hora que executa o projeto
 
         return ResponseEntity.ok(movieService.listAll());
@@ -59,7 +58,7 @@ public class MovieController {
     }
 
     /**
-     * Endpoint: <b>localhost:8080/movies/{id}</b> <br>
+     * Endpoint: <b>localhost:8080/movies</b> <br>
      * Método: <b>POST</b> <br>
      * <b>@RequestBody</b>: requisita de um body para tratar com o jackson. <br>
      * <b>@ResponseStatus</b>: padrão de resposta do endpoint. <br>
@@ -69,5 +68,15 @@ public class MovieController {
     // @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Movie> save(@RequestBody Movie movie) {
         return new ResponseEntity<>(movieService.save(movie), HttpStatus.CREATED);
+    }
+
+    /**
+     * Endpoint: <b>localhost:8080/movies/{id}</b> <br>
+     * Método: <b>DELETE</b> <br>
+     */
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable long id) {
+        movieService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

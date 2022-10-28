@@ -38,4 +38,8 @@ public class MovieService {
         movies.add(movie);
         return movie;
     }
+
+    public void delete(long id) {
+        movies.remove(findById(id));
+    }
 }
