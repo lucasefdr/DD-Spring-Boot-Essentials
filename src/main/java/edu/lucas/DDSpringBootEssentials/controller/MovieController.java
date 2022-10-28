@@ -1,6 +1,8 @@
 package edu.lucas.DDSpringBootEssentials.controller;
 
 import edu.lucas.DDSpringBootEssentials.domain.Movie;
+import edu.lucas.DDSpringBootEssentials.requests.MoviePostRequest;
+import edu.lucas.DDSpringBootEssentials.requests.MoviePutRequest;
 import edu.lucas.DDSpringBootEssentials.service.MovieService;
 import edu.lucas.DDSpringBootEssentials.util.DateUtil;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +56,7 @@ public class MovieController {
      */
     @GetMapping(path = "/{id}")
     public ResponseEntity<Movie> findById(@PathVariable long id) {
-        return ResponseEntity.ok(movieService.findById(id));
+        return ResponseEntity.ok(movieService.findByIdOrThrowBadRequestException(id));
     }
 
     /**
@@ -66,8 +68,8 @@ public class MovieController {
      */
     @PostMapping
     // @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Movie> save(@RequestBody Movie movie) {
-        return new ResponseEntity<>(movieService.save(movie), HttpStatus.CREATED);
+    public ResponseEntity<Movie> save(@RequestBody MoviePostRequest moviePostRequest) {
+        return new ResponseEntity<>(movieService.save(moviePostRequest), HttpStatus.CREATED);
     }
 
     /**
@@ -85,8 +87,8 @@ public class MovieController {
      * Método: <b>POST</b> <br>
      */
     @PutMapping
-    public ResponseEntity<Void> replace(@RequestBody Movie movie) {
-        movieService.replace(movie);
+    public ResponseEntity<Void> replace(@RequestBody MoviePutRequest moviePutRequest) {
+        movieService.replace(moviePutRequest);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
