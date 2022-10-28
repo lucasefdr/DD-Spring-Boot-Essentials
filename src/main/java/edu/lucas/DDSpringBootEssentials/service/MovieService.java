@@ -9,6 +9,7 @@ import edu.lucas.DDSpringBootEssentials.requests.MoviePutRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -32,6 +33,8 @@ public class MovieService {
                 .orElseThrow(() -> new BadRequestException("Movie not found."));
     }
 
+    // rollback para exceções
+    @Transactional(rollbackFor = Exception.class)
     public Movie save(MoviePostRequest moviePostRequest) {
         // Movie movie = Movie.builder().name(moviePostRequest.getName()).build();
         return movieRepository.save(MovieMapper.INSTANCE.toMovie(moviePostRequest));
