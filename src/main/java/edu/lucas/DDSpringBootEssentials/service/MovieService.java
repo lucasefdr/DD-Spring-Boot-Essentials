@@ -1,6 +1,7 @@
 package edu.lucas.DDSpringBootEssentials.service;
 
 import edu.lucas.DDSpringBootEssentials.domain.Movie;
+import edu.lucas.DDSpringBootEssentials.exception.BadRequestException;
 import edu.lucas.DDSpringBootEssentials.mapper.MovieMapper;
 import edu.lucas.DDSpringBootEssentials.repository.MovieRepository;
 import edu.lucas.DDSpringBootEssentials.requests.MoviePostRequest;
@@ -28,7 +29,7 @@ public class MovieService {
 
     public Movie findById(long id) {
         return movieRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Movie not found."));
+                .orElseThrow(() -> new BadRequestException("Movie not found."));
     }
 
     public Movie save(MoviePostRequest moviePostRequest) {
