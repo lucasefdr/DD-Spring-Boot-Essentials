@@ -4,14 +4,12 @@ import edu.lucas.DDSpringBootEssentials.domain.Movie;
 import edu.lucas.DDSpringBootEssentials.requests.MoviePostRequest;
 import edu.lucas.DDSpringBootEssentials.requests.MoviePutRequest;
 import edu.lucas.DDSpringBootEssentials.service.MovieService;
-import edu.lucas.DDSpringBootEssentials.util.DateUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -56,7 +54,17 @@ public class MovieController {
      */
     @GetMapping(path = "/{id}")
     public ResponseEntity<Movie> findById(@PathVariable long id) {
-        return ResponseEntity.ok(movieService.findByIdOrThrowBadRequestException(id));
+        return ResponseEntity.ok(movieService.findById(id));
+    }
+
+    /**
+     * Endpoint: <b>localhost:8080/movies/{id}</b> <br>
+     * Método: <b>GET</b> <br>
+     * <b>@PathVariable</b>: variável de caminho passada na URL
+     */
+    @GetMapping(path = "/find")
+    public ResponseEntity<List<Movie>> findByName(@RequestParam String name) {
+        return ResponseEntity.ok(movieService.findByName(name));
     }
 
     /**

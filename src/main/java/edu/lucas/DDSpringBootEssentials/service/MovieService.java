@@ -22,7 +22,11 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
-    public Movie findByIdOrThrowBadRequestException(long id) {
+    public List<Movie> findByName(String name) {
+        return movieRepository.findByName(name);
+    }
+
+    public Movie findById(long id) {
         return movieRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Movie not found."));
     }
@@ -33,11 +37,11 @@ public class MovieService {
     }
 
     public void delete(long id) {
-        movieRepository.delete(findByIdOrThrowBadRequestException(id));
+        movieRepository.delete(findById(id));
     }
 
     public void replace(MoviePutRequest moviePutRequest) {
-        Movie savedMovie = findByIdOrThrowBadRequestException(moviePutRequest.getId());
+        Movie savedMovie = findById(moviePutRequest.getId());
         Movie movie = movieRepository.save(MovieMapper.INSTANCE.toMovie(moviePutRequest));
         movie.setId(savedMovie.getId());
 

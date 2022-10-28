@@ -8,4 +8,5 @@ import java.util.List;
 // Interface de conexão com o banco de dados
 // JpaRepository já implementa várias métodos HTTP internamente
 public interface MovieRepository extends JpaRepository<Movie, Long> {
+    List<Movie> findByName(String name);
 }
