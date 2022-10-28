@@ -3,34 +3,61 @@ package edu.lucas.DDSpringBootEssentials.controller;
 import edu.lucas.DDSpringBootEssentials.domain.Movie;
 import edu.lucas.DDSpringBootEssentials.service.MovieService;
 import edu.lucas.DDSpringBootEssentials.util.DateUtil;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-// Controller
+
+/**
+ * <b>@RestController</b>: controlador REST <br>
+ * <b>@RequestMapping</b>: mapeamento da requisição <br>
+ * <b>@Log4j2</b>: log no terminal através do log.info <br>
+ * <b>@AllArgsConstructor</b>: annotation para criar construtor de todas as classes declaradas <br>
+ * <b>@RequiredArgsConstructor</b>: annotation para criar construtor de todas as classes constantes (final)
+ */
 @RestController
 @RequestMapping("movies")
-@Log4j2 // log no terminal através do log.info
-// @AllArgsConstructor // cria um construtor de todas as classes declaradas
-@RequiredArgsConstructor // cria um construtor com as classes constantes (final)
+@Log4j2
+// @AllArgsConstructor
+@RequiredArgsConstructor
 public class MovieController {
 
-    // @Autowired // Injeção de dependência
+    /**
+     * <b>@Autowired</b>: injeção de dependência
+     */
+    // @Autowired
     private final DateUtil dateUtil;
-    private final MovieService animeService;
+    private final MovieService movieService;
 
-    // localhost:8080/movies
+    /**
+     * Endpoint: <b>localhost:8080/movies</b> <br>
+     * Método: <b>GET</b> <br>
+     * <b>@ResponseEntity</b>: entidade de resposta
+     */
     @GetMapping
-    public List<Movie> list() {
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
-        return animeService.listAll();
+    public ResponseEntity<List<Movie>> list() { // ResponseEntity => Entidade de Resposta -> Uma List de Movie
+        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now())); // Log no terminal a hora que executa o projeto
+
+        return ResponseEntity.ok(movieService.listAll());
+        // return new ResponseEntity<>(movieService.listAll(), HttpStatus.OK);
+    }
+
+    /**
+     * Endpoint: <b>localhost:8080/movies/{id}</b> <br>
+     * Método: <b>GET</b> <br>
+     * <b>@PathVariable</b>: variável de caminho passada na URL
+     */
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<Movie> findById(@PathVariable long id) {
+        return ResponseEntity.ok(movieService.findById(id));
     }
 }

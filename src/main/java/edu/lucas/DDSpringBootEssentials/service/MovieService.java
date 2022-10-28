@@ -1,14 +1,29 @@
 package edu.lucas.DDSpringBootEssentials.service;
 
 import edu.lucas.DDSpringBootEssentials.domain.Movie;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 // classe responsável pela regra de negócio
 @Service
 public class MovieService {
+    private final List<Movie> movies = List.of(
+            new Movie(1L, "O Senhor dos Anéis"),
+            new Movie(2L, "Batman"),
+            new Movie(3L, "Harry Potter"));
+
     public List<Movie> listAll() {
-        return List.of(new Movie(1L, "O Senhor dos Anéis"), new Movie(2L, "Batman"), new Movie(3L, "Harry Potter"));
+        return movies;
+    }
+
+    public Movie findById(long id) {
+        return movies
+                .stream()
+                .filter(movie -> movie.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Movie not found."));
     }
 }

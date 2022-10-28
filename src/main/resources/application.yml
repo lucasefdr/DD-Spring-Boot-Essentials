@@ -1,0 +1,4 @@
+# Corrigindo retorno de erros
+server:
+  error:
+    include-stacktrace: on-param
