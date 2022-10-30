@@ -50,6 +50,14 @@ public class MovieController {
         // return new ResponseEntity<>(movieService.listAll(), HttpStatus.OK);
     }
 
+    @GetMapping(path = "/all")
+    public ResponseEntity<List<Movie>> listAll() { // ResponseEntity => Entidade de Resposta -> Uma List de Movie
+        // log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now())); // Log no terminal a hora que executa o projeto
+
+        return ResponseEntity.ok(movieService.listAllNonPageable());
+        // return new ResponseEntity<>(movieService.listAll(), HttpStatus.OK);
+    }
+
     /**
      * Endpoint: <b>localhost:8080/movies/{id}</b> <br>
      * Método: <b>GET</b> <br>
