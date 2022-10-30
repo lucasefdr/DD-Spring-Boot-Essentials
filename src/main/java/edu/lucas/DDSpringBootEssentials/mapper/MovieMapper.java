@@ -10,8 +10,9 @@ import org.mapstruct.factory.Mappers;
 public abstract class MovieMapper {
     public static final MovieMapper INSTANCE = Mappers.getMapper(MovieMapper.class);
 
-    // será convertido para anime
+    // será convertido para movie
     public abstract Movie toMovie(MoviePostRequest moviePostRequest);
+
     public abstract Movie toMovie(MoviePutRequest moviePutRequest);
 
 
