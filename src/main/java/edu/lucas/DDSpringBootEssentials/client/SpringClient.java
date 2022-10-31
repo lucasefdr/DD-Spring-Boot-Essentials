@@ -35,10 +35,13 @@ public class SpringClient {
         log.info(aHoraDoPesadelo);
 
         ResponseEntity<Movie> aCasaDeCera = new RestTemplate().exchange("http://localhost:8080/movies", HttpMethod.POST, new HttpEntity<>(Movie.builder().name("A casa de cera").build(), createJsonHeader()), Movie.class);
-        log.info(aCasaDeCera);*/
+        log.info(aCasaDeCera);
 
-        ResponseEntity<Void> exchangeDelete = new RestTemplate().exchange("http://localhost:8080/movies/{1}", HttpMethod.DELETE, null, Void.class, 21);
-        log.info(exchangeDelete);
+        ResponseEntity<Void> exchangeDelete = new RestTemplate().exchange("http://localhost:8080/movies/{1}", HttpMethod.DELETE, null, Void.class, 20);
+        log.info(exchangeDelete);*/
+
+        ResponseEntity<Void> exchangePut = new RestTemplate().exchange("http://localhost:8080/movies", HttpMethod.PUT, new HttpEntity<>(Movie.builder().id(19L).name("O Exorcista").build()), Void.class);
+        log.info(exchangePut);
     }
 
     private static HttpHeaders createJsonHeader() {
