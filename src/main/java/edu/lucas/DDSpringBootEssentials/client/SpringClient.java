@@ -12,7 +12,7 @@ import java.util.List;
 @Log4j2
 public class SpringClient {
     public static void main(String[] args) {
-        ResponseEntity<Movie> entity = new RestTemplate().getForEntity("http://localhost:8080/movies/{id}", Movie.class, 1);
+        /*ResponseEntity<Movie> entity = new RestTemplate().getForEntity("http://localhost:8080/movies/{id}", Movie.class, 1);
         log.info(entity);
 
         Movie object = new RestTemplate().getForObject("http://localhost:8080/movies/{id}", Movie.class, 1);
@@ -35,7 +35,10 @@ public class SpringClient {
         log.info(aHoraDoPesadelo);
 
         ResponseEntity<Movie> aCasaDeCera = new RestTemplate().exchange("http://localhost:8080/movies", HttpMethod.POST, new HttpEntity<>(Movie.builder().name("A casa de cera").build(), createJsonHeader()), Movie.class);
-        log.info(aCasaDeCera);
+        log.info(aCasaDeCera);*/
+
+        ResponseEntity<Void> exchangeDelete = new RestTemplate().exchange("http://localhost:8080/movies/{1}", HttpMethod.DELETE, null, Void.class, 21);
+        log.info(exchangeDelete);
     }
 
     private static HttpHeaders createJsonHeader() {
