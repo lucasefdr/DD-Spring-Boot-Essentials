@@ -7,7 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
+import java.util.Optional;
 
 // Classe de testes unitários
 @DataJpaTest
@@ -22,16 +23,76 @@ class MovieRepositoryTest {
     @DisplayName("Save creates Movie when successful")
     void save_PersistMovie_WhenSuccessful() {
         Movie movieToBeSaved = createMovie();
-        Movie savedMovie = this.movieRepository.save(movieToBeSaved);
+        Movie movieSaved = this.movieRepository.save(movieToBeSaved);
 
-        // Verifique que o savedMovie não é null
-        Assertions.assertThat(savedMovie).isNotNull();
+        // Verifique que o movieSaved não é null
+        Assertions.assertThat(movieSaved).isNotNull();
 
-        // Verifique que o id do savedMovie não é null
-        Assertions.assertThat(savedMovie.getId()).isNotNull();
+        // Verifique que o id do movieSaved não é null
+        Assertions.assertThat(movieSaved.getId()).isNotNull();
 
-        // Verifique que o nome do savedMovie é igual a do movieToBeSaved
-        Assertions.assertThat(savedMovie.getName()).isEqualTo(movieToBeSaved.getName());
+        // Verifique que o nome do movieSaved é igual a do movieToBeSaved
+        Assertions.assertThat(movieSaved.getName()).isEqualTo(movieToBeSaved.getName());
+    }
+
+    @Test
+    @DisplayName("Save updates Movie when successful")
+    void save_UpdatesMovie_WhenSuccessful() {
+        Movie movieToBeSaved = createMovie();
+        Movie movieSaved = this.movieRepository.save(movieToBeSaved);
+
+        movieSaved.setName("O Rei Leão");
+
+        Movie movieUpdated = this.movieRepository.save(movieSaved);
+
+        // Verifique que o movieSaved não é null
+        Assertions.assertThat(movieUpdated).isNotNull();
+
+        // Verifique que o id do movieSaved não é null
+        Assertions.assertThat(movieUpdated.getId()).isNotNull();
+
+        // Verifique que o nome do movieSaved é igual a do movieToBeSaved
+        Assertions.assertThat(movieUpdated.getName()).isEqualTo(movieSaved.getName());
+    }
+
+    @Test
+    @DisplayName("Delete removes Movie when successful")
+    void delete_RemovesMovie_WhenSuccessful() {
+        Movie movieToBeSaved = createMovie();
+        Movie movieSaved = this.movieRepository.save(movieToBeSaved);
+
+        this.movieRepository.delete(movieSaved);
+
+        Optional<Movie> movieOptional = this.movieRepository.findById(movieSaved.getId());
+
+        // Verifique que o movieOptional está vazio (deletado)
+        Assertions.assertThat(movieOptional).isEmpty();
+    }
+
+    @Test
+    @DisplayName("Find by name returns list of movies when successful")
+    void findByName_ReturnsMovie_WhenSuccessful() {
+        Movie movieToBeSaved = createMovie();
+        Movie movieSaved = this.movieRepository.save(movieToBeSaved);
+
+        String name = movieSaved.getName();
+
+        List<Movie> movies = this.movieRepository.findByName(name);
+
+        // Verifique que movies não está vazio
+        Assertions.assertThat(movies).isNotEmpty();
+
+        // Verifique que movies contém o movieSaved
+        Assertions.assertThat(movies).contains(movieSaved);
+    }
+
+    @Test
+    @DisplayName("Find by name returns empty list when no movie is found")
+    void findByName_ReturnsEmptyList_WhenMovieIsNotFound() {
+        List<Movie> movies = this.movieRepository.findByName("example");
+
+        // Verifique que movies está vazio
+        Assertions.assertThat(movies).isEmpty();
     }
 
     // Criando um objeto para os testes
