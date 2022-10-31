@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,11 +80,8 @@ class MovieRepositoryTest {
 
         List<Movie> movies = this.movieRepository.findByName(name);
 
-        // Verifique que movies não está vazio
-        Assertions.assertThat(movies).isNotEmpty();
-
-        // Verifique que movies contém o movieSaved
-        Assertions.assertThat(movies).contains(movieSaved);
+        // Verifique que movies não está vazio e se contém o movieSaved
+        Assertions.assertThat(movies).isNotEmpty().contains(movieSaved);
     }
 
     @Test
@@ -93,6 +91,18 @@ class MovieRepositoryTest {
 
         // Verifique que movies está vazio
         Assertions.assertThat(movies).isEmpty();
+    }
+
+    @Test
+    @DisplayName("Save throw ConstraintViolationException when name is empty")
+    void save_ThrowConstraintViolationException_WhenNameIsEmpty() {
+        Movie movie = new Movie();
+        /*Assertions.assertThatThrownBy(() -> this.movieRepository.save(movie))
+                .isInstanceOf(ConstraintViolationException.class);*/
+
+        Assertions.assertThatExceptionOfType(ConstraintViolationException.class)
+                .isThrownBy(() -> this.movieRepository.save(movie))
+                .withMessageContaining("The movie name cannot be empty");
     }
 
     // Criando um objeto para os testes

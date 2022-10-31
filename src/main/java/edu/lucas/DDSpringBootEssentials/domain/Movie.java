@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 
 @Data // Gera get, set, equals, hashcode, toString
 @AllArgsConstructor // Gera constructor com todos os valores
@@ -22,6 +23,7 @@ public class Movie {
     private Long id;
 
     //@JsonProperty("name")
+    @NotEmpty(message = "The movie name cannot be empty")
     private String name;
 
     /*public Movie(String name) {
