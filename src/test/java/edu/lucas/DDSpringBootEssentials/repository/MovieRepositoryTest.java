@@ -1,6 +1,7 @@
 package edu.lucas.DDSpringBootEssentials.repository;
 
 import edu.lucas.DDSpringBootEssentials.domain.Movie;
+import edu.lucas.DDSpringBootEssentials.util.MovieCreator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,7 @@ class MovieRepositoryTest {
     @Test
     @DisplayName("Save creates Movie when successful")
     void save_PersistMovie_WhenSuccessful() {
-        Movie movieToBeSaved = createMovie();
+        Movie movieToBeSaved = MovieCreator.createMovieToBeSaved();
         Movie movieSaved = this.movieRepository.save(movieToBeSaved);
 
         // Verifique que o movieSaved não é null
@@ -39,7 +40,7 @@ class MovieRepositoryTest {
     @Test
     @DisplayName("Save updates Movie when successful")
     void save_UpdatesMovie_WhenSuccessful() {
-        Movie movieToBeSaved = createMovie();
+        Movie movieToBeSaved = MovieCreator.createMovieToBeSaved();
         Movie movieSaved = this.movieRepository.save(movieToBeSaved);
 
         movieSaved.setName("O Rei Leão");
@@ -59,7 +60,7 @@ class MovieRepositoryTest {
     @Test
     @DisplayName("Delete removes Movie when successful")
     void delete_RemovesMovie_WhenSuccessful() {
-        Movie movieToBeSaved = createMovie();
+        Movie movieToBeSaved = MovieCreator.createMovieToBeSaved();
         Movie movieSaved = this.movieRepository.save(movieToBeSaved);
 
         this.movieRepository.delete(movieSaved);
@@ -73,7 +74,7 @@ class MovieRepositoryTest {
     @Test
     @DisplayName("Find by name returns list of movies when successful")
     void findByName_ReturnsMovie_WhenSuccessful() {
-        Movie movieToBeSaved = createMovie();
+        Movie movieToBeSaved = MovieCreator.createMovieToBeSaved();
         Movie movieSaved = this.movieRepository.save(movieToBeSaved);
 
         String name = movieSaved.getName();
@@ -106,7 +107,5 @@ class MovieRepositoryTest {
     }
 
     // Criando um objeto para os testes
-    private Movie createMovie() {
-        return Movie.builder().name("Além da vida").build();
-    }
+
 }
