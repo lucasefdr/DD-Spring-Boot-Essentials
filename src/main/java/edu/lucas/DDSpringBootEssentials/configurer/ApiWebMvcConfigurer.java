@@ -9,7 +9,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.List;
 
 // Configuração geral do Spring
-
 @Configuration
 public class ApiWebMvcConfigurer implements WebMvcConfigurer {
 

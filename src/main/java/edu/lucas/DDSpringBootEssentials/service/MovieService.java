@@ -32,7 +32,7 @@ public class MovieService {
         return movieRepository.findByName(name);
     }
 
-    public Movie findById(long id) {
+    public Movie findById(Long id) {
         return movieRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("Movie not found."));
     }
@@ -44,7 +44,7 @@ public class MovieService {
         return movieRepository.save(MovieMapper.INSTANCE.toMovie(moviePostRequest));
     }
 
-    public void delete(long id) {
+    public void delete(Long id) {
         movieRepository.delete(findById(id));
     }
 
