@@ -17,7 +17,7 @@ Project created to study the Spring framework.
 - [x]  LOG SQL
 - [x]  REST Templates
 - [x]  Spring Data JPA: Tests
-- [x]  Unit tests
+- [x]  Unit tests - JUnit
 - [ ]  Integration tests
 - [ ]  Spring Security: authentication, tests, url protection...
 - [ ]  SpringDoc OpenAPI
