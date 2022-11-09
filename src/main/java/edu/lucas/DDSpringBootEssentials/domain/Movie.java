@@ -12,32 +12,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 
-@Data // Gera get, set, equals, hashcode, toString
-@AllArgsConstructor // Gera constructor com todos os valores
+/**
+ * As classes de <b>domínio</b> são <b>entidades</b> do banco de dados. <br>
+ * Annotations: <br>
+ * <b>@Data</b>: Gera getter, setter, equals, hashcode e toString <br>
+ * <b>@AllArgsConstructor</b>: Gera construtor com todos os atributos <br>
+ * <b>@NoArgsConstructor</b>: Gera construtor vazio <br>
+ * <b>@Entity</b>: Entidade do banco de dados -> necessita de construtor sem argumentos e @Id <br>
+ * <b>@Builder</b>: através do builder() é possível construir um objeto <br>
+ */
+@Data
+@AllArgsConstructor
 @NoArgsConstructor
-@Entity // Entidade do banco de dados -> necessita de construtor sem argumentos e @Id
-@Builder //
+@Entity
+@Builder
 public class Movie {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Gera valor incremental do ID
     private Long id;
 
     //@JsonProperty("name")
-    @NotEmpty(message = "The movie name cannot be empty")
+    @NotEmpty(message = "The movie name cannot be empty") // A propriedade name não pode ser vazio
     private String name;
-
-    /*public Movie(String name) {
-        this.name = name;
-    }
-
-    public Movie() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }*/
 }

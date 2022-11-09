@@ -5,8 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-// Interface de conexão com o banco de dados
-// JpaRepository já implementa várias métodos HTTP internamente
+/**
+ * As interfaces de <b>repositórios</b> são responsáveis pela <b>conexão com o banco de dados</b>. <br>
+ * A interface <b>JpaRepository</b> implementa várias queries internamente.
+ */
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     List<Movie> findByName(String name);
 }
