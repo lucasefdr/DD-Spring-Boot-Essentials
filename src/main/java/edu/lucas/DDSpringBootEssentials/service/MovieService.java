@@ -14,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-// classe responsável pela regra de negócio
+/**
+ * As classes de <strong>serviços</strong> são responsáveis pela <strong>regra de negócio da aplicação</strong>. São anotadas com a annotation <strong>@Service</strong> <br>
+ */
 @Service
 @RequiredArgsConstructor
 public class MovieService {
@@ -33,31 +35,31 @@ public class MovieService {
     }
 
     public Movie findById(Long id) {
-        return movieRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException("Movie not found."));
+        return movieRepository.findById(id).orElseThrow(() -> new BadRequestException("Movie not found."));
     }
 
-    // rollback para exceções
+    // @Transactional para indicar que é uma transação
     @Transactional(rollbackFor = Exception.class)
     public Movie save(MoviePostRequest moviePostRequest) {
         // Movie movie = Movie.builder().name(moviePostRequest.getName()).build();
         return movieRepository.save(MovieMapper.INSTANCE.toMovie(moviePostRequest));
     }
 
+    @Transactional
     public void delete(Long id) {
         movieRepository.delete(findById(id));
     }
 
+    @Transactional
     public void replace(MoviePutRequest moviePutRequest) {
         Movie savedMovie = findById(moviePutRequest.getId());
         Movie movie = movieRepository.save(MovieMapper.INSTANCE.toMovie(moviePutRequest));
         movie.setId(savedMovie.getId());
 
-        /*
-        Movie movie = Movie.builder()
+        /*Movie movie = Movie.builder()
                 .id(savedMovie.getId())
                 .name(moviePutRequest.getName())
-                .build();
-        */
+                .build();*/
+
     }
 }

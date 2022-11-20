@@ -20,13 +20,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// Dica para o controller -> todos os controllers precisam utilizar isso
-// para descobrir a exception -> ?trace=true no request
-// extendendo ResponseEntityExceptionHandler
+/**
+ * O <strong>@ControllerAdvice</strong> funciona como uma para o controller. <br>
+ * A dica é: <strong>todos os controllers precisam utilizar isso</strong>. <br>
+ * Para descobrir a exception: <strong>?trace=true</strong> no request. <br>
+ * Extendendo a interface <strong>ResponseEntityExceptionHandler</strong>.
+ */
+
 @ControllerAdvice
 @Log4j2
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
-    // Toda vez que lançar uma exceção de "bad request" faça isso...
+    // Todas as vezes que lançar uma exceção de "bad request" faça isso...
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<BadRequestExceptionDetails> handleBadRequestException(BadRequestException exception) {
         return new ResponseEntity<>(

@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 
+/**
+ * Classe de <strong>transferência de objeto</strong>: usada para fazer requisições do método <strong>POST</strong>
+ */
 @Data
 @Builder
 @AllArgsConstructor

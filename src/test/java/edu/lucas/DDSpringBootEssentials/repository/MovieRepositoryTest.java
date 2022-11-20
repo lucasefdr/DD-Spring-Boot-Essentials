@@ -20,7 +20,7 @@ class MovieRepositoryTest {
     private MovieRepository movieRepository;
 
     // Método de teste
-    // Convenção para nome do teste: método, o que é pra fazer, o que esperar
+    // Convenção para nome do teste: método, o que é para fazer, o que esperar
     @Test
     @DisplayName("Save creates Movie when successful")
     void save_PersistMovie_WhenSuccessful() {
