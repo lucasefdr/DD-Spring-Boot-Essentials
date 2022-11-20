@@ -4,7 +4,7 @@ import edu.lucas.DDSpringBootEssentials.requests.MoviePutRequest;
 
 public class MoviePutRequestCreator {
 
-    public static MoviePutRequest createMoviePostRequestBody() {
+    public static MoviePutRequest createMoviePutRequestBody() {
         return MoviePutRequest.builder()
                 .id(MovieCreator.createValidUpdatedMovie().getId())
                 .name(MovieCreator.createValidUpdatedMovie().getName())

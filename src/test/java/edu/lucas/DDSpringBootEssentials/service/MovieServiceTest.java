@@ -139,7 +139,7 @@ class MovieServiceTest {
     @DisplayName("replace updates movie when successful")
     void replace_UpdatesMovie_WhenSuccessful() {
 
-        Assertions.assertThatCode(() -> movieService.replace(MoviePutRequestCreator.createMoviePostRequestBody())).doesNotThrowAnyException();
+        Assertions.assertThatCode(() -> movieService.replace(MoviePutRequestCreator.createMoviePutRequestBody())).doesNotThrowAnyException();
     }
 
     @Test

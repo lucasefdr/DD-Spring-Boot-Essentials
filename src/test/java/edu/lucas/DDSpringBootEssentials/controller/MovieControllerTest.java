@@ -151,11 +151,11 @@ class MovieControllerTest {
     @DisplayName("replace updates movie when successful")
     void replace_UpdatesMovie_WhenSuccessful() {
 
-        Assertions.assertThatCode(() -> movieController.replace(MoviePutRequestCreator.createMoviePostRequestBody())
+        Assertions.assertThatCode(() -> movieController.replace(MoviePutRequestCreator.createMoviePutRequestBody())
                         .getBody())
                 .doesNotThrowAnyException();
 
-        ResponseEntity<Void> entity = movieController.replace(MoviePutRequestCreator.createMoviePostRequestBody());
+        ResponseEntity<Void> entity = movieController.replace(MoviePutRequestCreator.createMoviePutRequestBody());
 
         Assertions.assertThat(entity).isNotNull();
         Assertions.assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
