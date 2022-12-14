@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -84,8 +85,10 @@ public class MovieController {
      * <b>@RequestBody</b>: requisita de um body para tratar com o jackson. <br>
      * <b>@ResponseStatus</b>: padrão de resposta do endpoint. <br>
      * <b>jackson</b>: faz o mapeamento do JSON se o mesmo conter as propriedades idênticas a classe
+     * {@link PreAuthorize} - requer uma validação de autorização para acessar o endpoint
      */
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     // @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Movie> save(@RequestBody @Valid MoviePostRequest moviePostRequest) {
         return new ResponseEntity<>(movieService.save(moviePostRequest), HttpStatus.CREATED);
