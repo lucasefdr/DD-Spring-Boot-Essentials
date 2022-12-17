@@ -91,8 +91,8 @@ public class MovieController {
      * <b>jackson</b>: faz o mapeamento do JSON se o mesmo conter as propriedades idênticas a classe
      * {@link PreAuthorize} - requer uma validação de autorização para acessar o endpoint
      */
-    @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping(path = "/admin")
+    // @PreAuthorize("hasRole('ADMIN')")
     // @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Movie> save(@RequestBody @Valid MoviePostRequest moviePostRequest) {
         return new ResponseEntity<>(movieService.save(moviePostRequest), HttpStatus.CREATED);
@@ -102,7 +102,7 @@ public class MovieController {
      * Endpoint: <b>localhost:8080/movies/{id}</b> <br>
      * Método: <b>DELETE</b> <br>
      */
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "/admin/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {
         movieService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -112,7 +112,7 @@ public class MovieController {
      * Endpoint: <b>localhost:8080/movies</b> <br>
      * Método: <b>POST</b> <br>
      */
-    @PutMapping
+    @PutMapping(path = "/admin")
     public ResponseEntity<Void> replace(@RequestBody MoviePutRequest moviePutRequest) {
         movieService.replace(moviePutRequest);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

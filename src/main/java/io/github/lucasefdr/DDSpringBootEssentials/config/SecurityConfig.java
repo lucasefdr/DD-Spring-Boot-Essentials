@@ -30,9 +30,13 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         //@formatter:off
         http.csrf().disable()
-                .authorizeHttpRequests((authz) -> authz.anyRequest()
-                .authenticated())
-                .formLogin()
+                .authorizeHttpRequests()
+                .antMatchers("/movies/admin/**").hasRole("ADMIN")
+                .antMatchers("/movies/**").hasRole("USER")
+                .anyRequest()
+                .authenticated();
+
+        http.formLogin()
                 .and()
                 .httpBasic();
         //@formatter:on
