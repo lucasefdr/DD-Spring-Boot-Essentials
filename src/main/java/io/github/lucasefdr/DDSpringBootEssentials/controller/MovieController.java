@@ -6,6 +6,7 @@ import io.github.lucasefdr.DDSpringBootEssentials.requests.MoviePutRequest;
 import io.github.lucasefdr.DDSpringBootEssentials.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -46,7 +47,7 @@ public class MovieController {
      * <b>@ResponseEntity</b>: entidade de resposta
      */
     @GetMapping
-    public ResponseEntity<Page<Movie>> list(Pageable pageable) { // ResponseEntity => Entidade de Resposta -> Uma List de Movie
+    public ResponseEntity<Page<Movie>> list(@ParameterObject Pageable pageable) { // ResponseEntity => Entidade de Resposta -> Uma List de Movie
         // log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now())); // Log no terminal a hora que executa o projeto
 
         return ResponseEntity.ok(movieService.listAll(pageable));
