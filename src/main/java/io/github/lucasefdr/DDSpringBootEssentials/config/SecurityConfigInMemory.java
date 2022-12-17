@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -22,14 +21,14 @@ import java.util.List;
  * Annotation para configuração de segurança <br>
  * {@link EnableGlobalMethodSecurity} - habilitar a verificação nos endpoints
  */
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+// @EnableWebSecurity
+// @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Log4j2
-public class SecurityConfig {
+public class SecurityConfigInMemory {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         //@formatter:off
-        http.csrf().disable()
+        http.csrf().disable() // csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .authorizeHttpRequests((authz) -> authz.anyRequest()
                 .authenticated())
                 .formLogin()
@@ -46,8 +45,28 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    public InMemoryUserDetailsManager users(AuthenticationManagerBuilder auth) throws Exception {
+        PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
+        UserDetails user1 = User
+                .withUsername("lucasefdr")
+                .password(passwordEncoder.encode("pass"))
+                .roles("USER", "ADMIN")
+                .build();
+
+        UserDetails user2 = User
+                .withUsername("laramfdr")
+                .password(passwordEncoder.encode("pass"))
+                .roles("USER")
+                .build();
+
+        log.info(passwordEncoder.encode("pass"));
+
+        List<UserDetails> users = new ArrayList<>();
+        users.add(user1);
+        users.add(user2);
+
+        return new InMemoryUserDetailsManager(users);
     }
 }
 
