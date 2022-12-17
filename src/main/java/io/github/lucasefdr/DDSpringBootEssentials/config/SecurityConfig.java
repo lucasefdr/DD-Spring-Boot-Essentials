@@ -30,7 +30,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authz) -> authz
                         .anyRequest()
                         .authenticated())
-                .httpBasic();
+                .formLogin()
+                .and()
+                .httpBasic()
+        ;
 
         return http.build();
     }

@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -65,7 +67,9 @@ public class MovieController {
      * <b>@PathVariable</b>: variável de caminho passada na URL
      */
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Movie> findById(@PathVariable long id) {
+    public ResponseEntity<Movie> findById(@PathVariable long id,
+                                          @AuthenticationPrincipal UserDetails userDetails) {
+        log.info(userDetails);
         return ResponseEntity.ok(movieService.findById(id));
     }
 
