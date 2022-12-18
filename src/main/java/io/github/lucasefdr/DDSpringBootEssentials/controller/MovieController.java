@@ -4,6 +4,9 @@ import io.github.lucasefdr.DDSpringBootEssentials.domain.Movie;
 import io.github.lucasefdr.DDSpringBootEssentials.requests.MoviePostRequest;
 import io.github.lucasefdr.DDSpringBootEssentials.requests.MoviePutRequest;
 import io.github.lucasefdr.DDSpringBootEssentials.service.MovieService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springdoc.api.annotations.ParameterObject;
@@ -47,6 +50,7 @@ public class MovieController {
      * <b>@ResponseEntity</b>: entidade de resposta
      */
     @GetMapping
+    @Operation(summary = "List all movies paginated", description = "The default size is 20, use the parameter size to change the default value", tags = {"movie"})
     public ResponseEntity<Page<Movie>> list(@ParameterObject Pageable pageable) { // ResponseEntity => Entidade de Resposta -> Uma List de Movie
         // log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now())); // Log no terminal a hora que executa o projeto
 
@@ -104,6 +108,10 @@ public class MovieController {
      * Método: <b>DELETE</b> <br>
      */
     @DeleteMapping(path = "/admin/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Succesful operation"),
+            @ApiResponse(responseCode = "400", description = "When movie doens't exists in the database")
+    })
     public ResponseEntity<Void> delete(@PathVariable long id) {
         movieService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

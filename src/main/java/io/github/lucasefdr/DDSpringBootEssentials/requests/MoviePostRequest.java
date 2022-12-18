@@ -1,5 +1,6 @@
 package io.github.lucasefdr.DDSpringBootEssentials.requests;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,5 +17,6 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 public class MoviePostRequest {
     @NotEmpty(message = "The movie name cannot be empty")
+    @Schema(description = "This is the movie's name", example = "O Senhor dos Anéis")
     private String name;
 }
